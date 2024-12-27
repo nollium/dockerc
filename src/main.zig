@@ -179,6 +179,8 @@ fn getContainerFromArgs(file: std.fs.File, rootfs_absolute_path: []const u8, par
             const processVal = object.getPtr("process") orelse @panic("no process key");
             switch (processVal.*) {
                 .object => |*process| {
+                    try process.put("terminal", std.json.Value{ .bool = false });
+
                     const argsVal = process.getPtr("args") orelse @panic("no args key");
                     switch (argsVal.*) {
                         .array => |*argsArr| {
